@@ -26,13 +26,24 @@ with open('webdesignforums/wdf-threads.json') as f:
 ## Making a list of Titles
 old_thread_array = []
 for thread in old_threads['Threads']:
-  old_thread_array.append(thread["title"])
-print(old_thread_array)
+  old_thread_array.append([thread["title"], thread["date"]])
 
-## Left ntersect the arrays
-
-
-
-## Any leftover gets added to the JSON string
+## Left ntersect the arrays (Might not actually be a left intersection)
+new_threads = [x for x in thread_array if x not in old_thread_array]
+print("New Array")
+print(new_threads)
 
 ## Remake the JSON file
+json_to_push = {
+    "Threads": [
+        {
+            "title": "The best thread", 
+            "date": "01/01/2021"
+        },
+        {
+            "title": "The bestest thread", 
+            "date": "01/02/2021"
+        }
+    ]
+}
+
