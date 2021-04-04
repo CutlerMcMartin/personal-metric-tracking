@@ -17,8 +17,6 @@ for row in scraped_info:
     date_string = datetime.strptime(date_string, '%b %d, %Y').strftime('%m/%d/%Y')
     thread_array.append([row.select('.hasavatar .title')[0].text.strip(), date_string])
 
-    ##print(thread_array[5])
-
 ## Converting Existing JSON file into a dict
 with open('webdesignforums/wdf-threads.json') as f:
   old_threads = json.load(f)
@@ -34,16 +32,14 @@ print("New Array")
 print(new_threads)
 
 ## Remake the JSON file
-json_to_push = {
-    "Threads": [
-        {
-            "title": "The best thread", 
-            "date": "01/01/2021"
-        },
-        {
-            "title": "The bestest thread", 
-            "date": "01/02/2021"
-        }
-    ]
-}
+json_to_push = old_threads
 
+for thread in new_threads:
+  json_to_push['Threads'].append({
+      'title': thread[0],
+      'date': thread[1]
+  })
+
+## Writing the file
+with open('webdesignforums/wdf-threads.json', 'w') as outfile:
+    json.dump(json_to_push, outfile)
